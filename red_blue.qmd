@@ -1,0 +1,28 @@
+---
+title: "Presidental Election Voter Turnout."
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+```{r}
+turnout <- read_csv('./election_voter_turnout_1900_2020.csv') |> janitor::clean_names()
+turnout$winning_party <- as.factor(turnout$winning_party)
+turnout$year <- as.factor(turnout$year)
+summary(turnout)
+```
+
+```{r}
+
+
+# Create the bar chart
+ggplot(turnout, aes(x = year, y = voter_turnout_percent, fill =winning_party)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("Republican" = "red", "Democratic" = "blue")) +
+  labs(title = "Voter Turnout by Year with Winning Party",
+       x = "Year",
+       y = "Voter Turnout (%)") +
+  theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
